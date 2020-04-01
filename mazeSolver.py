@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 def fileHeight(fname):
     i = 0
     for line in open(fname):
@@ -17,12 +18,22 @@ def fileWidth(fname):
 ##################################
 
 inputFile = 'mazeInput.txt'
+=======
+fle = open("mazeInput.txt", "r")
+maze = [[x for x in range()] for x in range(m)] 
 
-with open(inpFle, 'r') as file:
-    data = file.read().replace(', ', '')
-    open(inpFle, "w").write(data)
-#https://stackoverflow.com/questions/19201575/python-read-file-look-up-a-string-and-remove-characters
+def file_len(fname):
+    with open(fname) as f:
+        for i, l in enumerate(f):
+            pass
+    return i + 1
+#https://stackoverflow.com/questions/845058/how-to-get-line-count-of-a-large-file-cheaply-in-python
+>>>>>>> parent of fe09331... Input stuff
 
+for i in range(5):
+    maze.append(fle.readline())
+
+<<<<<<< HEAD
 maze = [[x for x in open(inputFile, "r").readline()] for y in range(fileWidth(inputFile))] 
 
 # for row in range(fileHeight('mazeInput.txt')):
@@ -36,3 +47,10 @@ maze = [[x for x in open(inputFile, "r").readline()] for y in range(fileWidth(in
 #             maze[]
 
 print(maze)
+=======
+
+
+for i in range(len(maze)):
+    for j in range(len(maze[i])):
+        print(j)
+>>>>>>> parent of fe09331... Input stuff
