@@ -1,28 +1,32 @@
 inpFile = 'mazeInput.txt'
-fileWidth = 7 #MAKE SURE THIS IS AUTOMATIC
+stack = []
 adjSquares = {}
+class completedPath(Exception): pass
 
 def possMoves(y, x):
-    if y > 0:
+    adjSquares.clear()
+    if y > 0 and maze[y - 1][x] != 1 or 5:
         adjSquares[str(y - 1) + str(x)] = maze[y - 1][x]
-    if y < len(maze) - 1:
+    elif y < len(maze) - 1 and maze[y + 1][x] != 1 or 5:
         adjSquares[str(y + 1) + str(x)] = maze[y + 1][x]
-    if x > 0:
+    elif x > 0 and maze[y][x - 1] != 1 or 5:
         adjSquares[str(y) + str(x - 1)] = maze[y][x - 1]
-    if x < len(maze[0]):
+    elif x < len(maze[0]) and maze[y][x + 1] != 1 or 5:
         adjSquares[str(y) + str(x + 1)] = maze[y][x + 1]
 
-def move():
-    for i in adjSquares:
-        if i == 0:
-            stack.append(adjSquares[i])
-        elif i == 
-
-###################################
-###################################
-###################################
-
-stack = []
+# def move():
+#     possMoves(int(stack[-1][0]), int(stack[-1][1]))
+#     if len(adjSquares) == 0:
+#         del stack[-1]
+#     if 3 in adjSquares.values():
+#         print('DONE')
+#         raise completedPath
+#     else:
+#         for i in adjSquares:
+#             if adjSquares[i] == 0:
+#                 stack.append(i) #
+#                 maze[int(stack[-1][0])][int(stack[-1][1])] = 5
+#                 break
 
 with open(inpFile, 'r') as file:
     data = file.read().replace(', ', ' ')
@@ -38,9 +42,11 @@ for row, column in enumerate(maze):
         stack.append(str(row) + str(column.index(5)))
 #https://stackoverflow.com/questions/5775352/python-return-2-ints-for-index-in-2d-lists-given-item
 
-possMoves(int(stack[-1][0]), int(stack[-1][1]))
-print(adjSquares)
+try:
+    while True:
+        move()
+        print(adjSquares)
+except completedPath:
+    pass
 
 print(maze)
-print(stack)
-print(int(maze[int(stack[0][0])][int(stack[0][1])]))
