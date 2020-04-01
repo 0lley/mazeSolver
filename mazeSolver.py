@@ -3,6 +3,9 @@ stack = []
 adjSquares = {}
 class completedPath(Exception): pass
 
+def mazeHeight():
+    
+
 def possMoves(y, x):
     adjSquares.clear()
     if y > 0 and maze[y - 1][x] != 1 and maze[y - 1][x] != 5:
@@ -11,7 +14,7 @@ def possMoves(y, x):
         adjSquares[str(y + 1) + str(x)] = maze[y + 1][x]
     if x > 0 and maze[y][x - 1] != 1 and maze[y][x - 1] != 5:
         adjSquares[str(y) + str(x - 1)] = maze[y][x - 1]
-    if x < len(maze[0]) - 1 and maze[y][x + 1] != 1 and maze[y][x + 1] != 5:
+    if x < len(maze[y]) - 1 and maze[y][x + 1] != 1 and maze[y][x + 1] != 5:
         adjSquares[str(y) + str(x + 1)] = maze[y][x + 1]
 
 def move():
@@ -49,5 +52,4 @@ try:
 except completedPath:
     pass
 
-possMoves(int(stack[-1][0]), int(stack[-1][1]))
 print(stack)
