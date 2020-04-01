@@ -1,15 +1,22 @@
 inpFile = 'mazeInput.txt'
+fileWidth = 7 #MAKE SURE THIS IS AUTOMATIC
+adjSquares = {}
 
-def fileLength(fname):
-    i = 0
-    for line in open(fname):
-        i += 1
-    return(i)
+def possMoves(y, x):
+    if y > 0:
+        adjSquares[str(y - 1) + str(x)] = maze[y - 1][x]
+    if y < len(maze) - 1:
+        adjSquares[str(y + 1) + str(x)] = maze[y + 1][x]
+    if x > 0:
+        adjSquares[str(y) + str(x - 1)] = maze[y][x - 1]
+    if x < len(maze[0]):
+        adjSquares[str(y) + str(x + 1)] = maze[y][x + 1]
 
-def vibeCheck(y, x):
-    if y - 1 >= 0 and maze[y-1][x] == 0:
-        stack.append(str(y - 1) + str(x))
-#CHECKS SQUARES AROUND THE GIVEN ONE AND SENDS AVAILABLE ONES TO THE STACK
+def move():
+    for i in adjSquares:
+        if i == 0:
+            stack.append(adjSquares[i])
+        elif i == 
 
 ###################################
 ###################################
@@ -25,14 +32,15 @@ with open(inpFile, 'r') as file:
 with open("mazeInput.txt", "r") as file:
     maze = [[int(i) for i in line.split()] for line in file]
 #https://stackoverflow.com/questions/19201575/python-read-file-look-up-a-string-and-remove-characters user Bartosz Marcinkowski
-
+  
 for row, column in enumerate(maze):
     if 5 in column:
         stack.append(str(row) + str(column.index(5)))
 #https://stackoverflow.com/questions/5775352/python-return-2-ints-for-index-in-2d-lists-given-item
 
-vibeCheck(int(stack[0][0]), int(stack[0][1]))
+possMoves(int(stack[-1][0]), int(stack[-1][1]))
+print(adjSquares)
 
 print(maze)
 print(stack)
-print(maze[int(stack[0][0])][int(stack[0][1])])
+print(int(maze[int(stack[0][0])][int(stack[0][1])]))
