@@ -5,28 +5,28 @@ class completedPath(Exception): pass
 
 def possMoves(y, x):
     adjSquares.clear()
-    if y > 0 and maze[y - 1][x] != 1 or 5:
+    if y > 0 and maze[y - 1][x] != 1 and maze[y - 1][x] != 5:
         adjSquares[str(y - 1) + str(x)] = maze[y - 1][x]
-    elif y < len(maze) - 1 and maze[y + 1][x] != 1 or 5:
+    if y < len(maze) - 1 and maze[y + 1][x] != 1 and maze[y + 1][x] != 5:
         adjSquares[str(y + 1) + str(x)] = maze[y + 1][x]
-    elif x > 0 and maze[y][x - 1] != 1 or 5:
+    if x > 0 and maze[y][x - 1] != 1 and maze[y][x - 1] != 5:
         adjSquares[str(y) + str(x - 1)] = maze[y][x - 1]
-    elif x < len(maze[0]) and maze[y][x + 1] != 1 or 5:
+    if x < len(maze[0]) - 1 and maze[y][x + 1] != 1 and maze[y][x + 1] != 5:
         adjSquares[str(y) + str(x + 1)] = maze[y][x + 1]
 
-# def move():
-#     possMoves(int(stack[-1][0]), int(stack[-1][1]))
-#     if len(adjSquares) == 0:
-#         del stack[-1]
-#     if 3 in adjSquares.values():
-#         print('DONE')
-#         raise completedPath
-#     else:
-#         for i in adjSquares:
-#             if adjSquares[i] == 0:
-#                 stack.append(i) #
-#                 maze[int(stack[-1][0])][int(stack[-1][1])] = 5
-#                 break
+def move():
+    possMoves(int(stack[-1][0]), int(stack[-1][1]))
+    if len(adjSquares) == 0:
+        del stack[-1]
+    if 3 in adjSquares.values():
+        print('DONE')
+        raise completedPath
+    else:
+        for i in adjSquares:
+            if adjSquares[i] == 0:
+                stack.append(i) #
+                maze[int(stack[-1][0])][int(stack[-1][1])] = 5
+                break
 
 with open(inpFile, 'r') as file:
     data = file.read().replace(', ', ' ')
@@ -49,4 +49,5 @@ try:
 except completedPath:
     pass
 
-print(maze)
+possMoves(int(stack[-1][0]), int(stack[-1][1]))
+print(stack)
