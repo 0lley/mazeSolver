@@ -24,7 +24,7 @@ def move():
     else:
         for i in adjSquares:
             if adjSquares[i] == 0:
-                stack.append(i) #
+                stack.append(str(i))
                 maze[int(stack[-1][0])][int(stack[-1][1])] = 5
                 break
 
