@@ -3,9 +3,6 @@ stack = []
 adjSquares = {}
 class completedPath(Exception): pass
 
-def mazeHeight():
-    
-
 def possMoves(y, x):
     adjSquares.clear()
     if y > 0 and maze[y - 1][x] != 1 and maze[y - 1][x] != 5:
