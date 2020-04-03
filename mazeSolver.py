@@ -1,8 +1,13 @@
 inpFile = 'test_maze1.txt'
 adjSquares = {}
 Queue = []
-PassMoves = []
 class completedPath(Exception): pass #Allows for the program to end when the exit is reached
+
+def formatFile(char1, char2):
+    with open(inpFile, 'r') as file:
+        data = file.read().replace(char1, char2)
+        open(inpFile, "w").write(data)
+#https://stackoverflow.com/questions/19201575/python-read-file-look-up-a-string-and-remove-characters
 
 def possMoves(y, x, notAllowed):
     adjSquares.clear()
@@ -27,7 +32,6 @@ def move(): ###FIX THIS UP SO IT GOES FROM 3 TO 5
 
     elif 3 in adjSquares.values():
         print('DONE')
-        PassMoves.append(Queue.pop(0))
         raise completedPath
 
     else:
@@ -38,10 +42,7 @@ def move(): ###FIX THIS UP SO IT GOES FROM 3 TO 5
                 Queue.append(i + ' ' + Queue[0])
         Queue.pop(0)
 
-with open(inpFile, 'r') as file:
-    data = file.read().replace(', ', ' ')
-    open(inpFile, "w").write(data)
-#https://stackoverflow.com/questions/19201575/python-read-file-look-up-a-string-and-remove-characters
+formatFile(', ', ' ')
 
 with open(inpFile, "r") as file:
     maze = [[int(i) for i in line.split()] for line in file]
@@ -58,6 +59,9 @@ try:
 except completedPath:
     pass
 
-print(PassMoves)
+for i in Queue.pop(0).split():
+    maze[int(i[0])][int(i[1])] = 5
+
+print(maze)
 
 #(PassMoves)
