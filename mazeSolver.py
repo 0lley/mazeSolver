@@ -4,7 +4,7 @@ Queue = []
 
 class completedPath(Exception): pass #Allows for the program to end when the exit is reached
 
-def possMoves(y, x, notAllowed):
+def possMoves(y, x, notAllowed): #Checks for possible moves from a certain point and adds it to the dictionary adjSquares
     adjSquares.clear()
 
     if y > 0 and str(maze[y - 1][x]) not in notAllowed: #Checks if the tile above is traversible
@@ -30,11 +30,11 @@ def move(): #Handles all of the moving of the maze solver
 
     else: #Carries out the actual process of breadth first search
         for i in adjSquares:
-            if i in Queue[0].strip():
+            if i in Queue[0].strip(): #If the tile has been visited before in the current instance, go onto the next adjacent tile
                 continue
-            else:
-                Queue.append(i + ' ' + Queue[0])
-        Queue.pop(0)
+            else: #If the tile is unvisited in the current instance, visit it
+                Queue.append(i + ' ' + Queue[0]) #Add the new set of moves to the end of the queue
+        Queue.pop(0) #Remove the item from the queue, ie mark as complete
 
 with open(inpFile, "r") as file: #Loads the text file into the 2d maze list
     maze = [[int(i) for i in line.replace(',', '').split()] for line in file]
