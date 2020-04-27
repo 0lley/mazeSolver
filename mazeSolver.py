@@ -6,20 +6,20 @@ class completedPath(Exception): pass #Allows for the program to end when the exi
 
 def possMoves(queuePosition, notAllowed): #Checks for possible moves from a certain point and adds it to the dictionary adjSquares
     adjSquares.clear()
-    y = int(queuePosition.split()[0].split('.')[0])
-    x = int(queuePosition.split()[0].split('.')[1])
+    y = int(queuePosition.split()[0].split(',')[0])
+    x = int(queuePosition.split()[0].split(',')[1])
 
     if y > 0 and str(maze[y - 1][x]) not in notAllowed: #Checks if the tile above is traversible
-        adjSquares[str(y - 1) + '.' + str(x)] = maze[y - 1][x]
+        adjSquares[str(y - 1) + ',' + str(x)] = maze[y - 1][x]
         
     if y < len(maze) - 1 and str(maze[y + 1][x]) not in notAllowed: #Checks if the tile below is traversible
-        adjSquares[str(y + 1) + '.' + str(x)] = maze[y + 1][x]
+        adjSquares[str(y + 1) + ',' + str(x)] = maze[y + 1][x]
 
     if x > 0 and str(maze[y][x - 1]) not in notAllowed: #Checks if the tile to the left is traversible
-        adjSquares[str(y) + '.' + str(x - 1)] = maze[y][x - 1]
+        adjSquares[str(y) + ',' + str(x - 1)] = maze[y][x - 1]
 
     if x < len(maze[0]) - 1 and str(maze[y][x + 1]) not in notAllowed: #Checks if the tile to the right is traversible
-        adjSquares[str(y) + '.' + str(x + 1)] = maze[y][x + 1]
+        adjSquares[str(y) + ',' + str(x + 1)] = maze[y][x + 1]
 
 def move(): #Handles all of the moving of the maze solver
     possMoves(queue[0], '125') #Checks for possible moves and adds the coordinates and tile number to the dictionary adjSquares
@@ -43,7 +43,7 @@ with open(inpFile, "r") as file: #Loads the text file into the 2d maze list
   
 for row, column in enumerate(maze): #Searches for and adds the coordinates of the beginning in (y, x) format
     if 5 in column:
-        queue.append(str(row) + '.' + str(column.index(5)))
+        queue.append(str(row) + ',' + str(column.index(5)))
 #https://stackoverflow.com/questions/5775352/python-return-2-ints-for-index-in-2d-lists-given-item
 
 try: #Executes all of the movement
@@ -53,7 +53,7 @@ except completedPath: #Breaks the loop when exception completedPath is raised (w
     pass
 
 for i in queue[0].split(): #The 'winning' combination of moves replaces all traversed 0s with 5s of the 
-    maze[int(i.split('.')[0])][int(i.split('.')[1])] = 5
+    maze[int(i.split(',')[0])][int(i.split(',')[1])] = 5
 
 for line in maze: #Prints out the final resultant maze
     print(str(line).strip('[').strip(']').replace(',', ''))
