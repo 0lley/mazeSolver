@@ -1,45 +1,35 @@
-inpFile = 'test_maze1.txt'
 adjSquares = {}
 queue = []
+moves = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+
+with open('test_maze1.txt', "r") as file: #Loads the text file into the 2d maze list
+    maze = [[int(i) for i in line.replace(',', '').split()] for line in file]
+
+height = len(maze) - 1
+width = len(maze[0]) - 1
 
 class completedPath(Exception): pass #Allows for the program to end when the exit is reached
 
-def possMoves(queuePosition, notAllowed): #Checks for possible moves from a certain point and adds it to the dictionary adjSquares
+def possMoves(queueElement, notAllowed): #Checks for possible moves from a certain point and adds it to the dictionary adjSquares
     adjSquares.clear()
-    y = int(queuePosition.split()[0].split(',')[0])
-    x = int(queuePosition.split()[0].split(',')[1])
+    y = int(queueElement.split()[0].split(',')[0])
+    x = int(queueElement.split()[0].split(',')[1])
 
-    if y > 0 and str(maze[y - 1][x]) not in notAllowed: #Checks if the tile above is traversible
-        adjSquares[str(y - 1) + ',' + str(x)] = maze[y - 1][x]
-        
-    if y < len(maze) - 1 and str(maze[y + 1][x]) not in notAllowed: #Checks if the tile below is traversible
-        adjSquares[str(y + 1) + ',' + str(x)] = maze[y + 1][x]
-
-    if x > 0 and str(maze[y][x - 1]) not in notAllowed: #Checks if the tile to the left is traversible
-        adjSquares[str(y) + ',' + str(x - 1)] = maze[y][x - 1]
-
-    if x < len(maze[0]) - 1 and str(maze[y][x + 1]) not in notAllowed: #Checks if the tile to the right is traversible
-        adjSquares[str(y) + ',' + str(x + 1)] = maze[y][x + 1]
+    for coord in moves:
+        if 0 <= y + coord[0] <= height and 0 <= x + coord[1] <= width and str(maze[y + coord[0]][x + coord[1]]) not in notAllowed:
+            adjSquares[str(y + coord[0]) + ',' + str(x + coord[1])] = maze[y + coord[0]][x + coord[1]]
 
 def move(): #Handles all of the moving of the maze solver
     possMoves(queue[0], '125') #Checks for possible moves and adds the coordinates and tile number to the dictionary adjSquares
 
-    if len(adjSquares) == 0: #Removes the branch of the tree if it reaches a dead end
-        queue.pop(0)
-
-    elif 3 in adjSquares.values(): #Allows for the loop to end once the solver reaches the maze exit
+    if 3 in adjSquares.values(): #Allows for the loop to end once the solver reaches the maze exit
         raise completedPath
 
     else: #Carries out the actual process of breadth first search
         for i in adjSquares:
-            if i in queue[0].strip(): #If the tile has been visited before in the current instance, go onto the next adjacent tile
-                continue
-            else: #If the tile is unvisited in the current instance, visit it
+            if i not in queue[0].strip(): #If the tile is unvisited in the current instance, visit it
                 queue.append(i + ' ' + queue[0]) #Add the new set of moves to the end of the queue
         queue.pop(0) #Remove the item from the queue, ie mark as complete
-
-with open(inpFile, "r") as file: #Loads the text file into the 2d maze list
-    maze = [[int(i) for i in line.replace(',', '').split()] for line in file]
   
 for row, column in enumerate(maze): #Searches for and adds the coordinates of the beginning in (y, x) format
     if 5 in column:
