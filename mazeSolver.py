@@ -30,7 +30,7 @@ def move(): #Handles all of the moving of the maze solver
             if i not in queue[0].strip(): #If the tile is unvisited in the current instance, visit it
                 queue.append(i + ' ' + queue[0]) #Add the new set of moves to the end of the queue
         queue.pop(0) #Remove the item from the queue, ie mark as complete
-  
+
 for row, column in enumerate(maze): #Searches for and adds the coordinates of the beginning in (y, x) format
     if 5 in column:
         queue.append(str(row) + ',' + str(column.index(5)))
