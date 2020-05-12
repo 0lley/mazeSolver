@@ -16,8 +16,8 @@ def possMoves(queueElement, notAllowed): #Checks for possible moves from a certa
     x = int(queueElement.split()[0].split(',')[1])
 
     for coord in moves:
-        if 0 <= y + coord[0] <= height and 0 <= x + coord[1] <= width and str(maze[y + coord[0]][x + coord[1]]) not in notAllowed:
-            adjSquares[str(y + coord[0]) + ',' + str(x + coord[1])] = maze[y + coord[0]][x + coord[1]]
+        if 0 <= y + coord[0] <= height and 0 <= x + coord[1] <= width and str(maze[y + coord[0]][x + coord[1]]) not in notAllowed: #Checks for traversible tiles in the order: up, down, right, left
+            adjSquares[str(y + coord[0]) + ',' + str(x + coord[1])] = maze[y + coord[0]][x + coord[1]] #Adds moveable tiles to the adjSquares dictionary, with its accompanying value (eg 0 or 3)
 
 def move(): #Handles all of the moving of the maze solver
     possMoves(queue[0], '125') #Checks for possible moves and adds the coordinates and tile number to the dictionary adjSquares
@@ -42,7 +42,7 @@ try: #Executes all of the movement
 except completedPath: #Breaks the loop when exception completedPath is raised (when the maze solver reaches the exit)
     pass
 
-for i in queue[0].split(): #The 'winning' combination of moves replaces all traversed 0s with 5s of the 
+for i in queue[0].split(): #The 'winning' combination of moves replaces all traversed 0s with 5s in the maze
     maze[int(i.split(',')[0])][int(i.split(',')[1])] = 5
 
 for line in maze: #Prints out the final resultant maze
